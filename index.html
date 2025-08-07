@@ -775,6 +775,8 @@
 
         .ft-form-group {
             margin-bottom: 24px;
+            position: relative;
+            z-index: auto;
         }
 
         .ft-form-label {
@@ -958,6 +960,16 @@
             gap: 12px;
             margin-top: 8px;
             height: 80px; /* Consistent height with other inputs */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure vehicle group stays above other elements */
+        .ft-vehicle-group {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 48px; /* Add extra space after vehicle selection */
+            padding-bottom: 20px; /* Additional padding for clearance */
         }
 
         .ft-vehicle-option {
