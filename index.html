@@ -30,6 +30,7 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
+            will-change: transform;
         }
 
         @media (min-width: 769px) {
@@ -45,36 +46,40 @@
         }
 
         .ft-results-right {
-            flex: 0 0 300px;
+            flex: 0 0 400px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             margin-top: 40px; /* Align with comparison cards margin */
         }
 
         @media (max-width: 768px) {
             .ft-results-right {
                 flex: none;
-                order: -1; /* Show before results on mobile */
+                order: 2; /* Show after results on mobile */
+                margin-top: 40px;
             }
         }
 
-        /* Image placeholder */
+        /* Image container - thumbnail style */
         .ft-results-image {
             width: 100%;
-            height: 330px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px dashed #dee2e6;
+            height: auto;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6c757d;
-            font-size: 16px;
-            font-weight: 500;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #f8f9fa;
+        }
+
+        .ft-results-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .ft-results-image:hover img {
+            transform: scale(1.02);
         }
 
         /* Text content below image */
@@ -82,29 +87,32 @@
             background: #ffffff;
             border: 1px solid #e0e4e7;
             border-radius: 12px;
-            padding: 24px;
+            padding: 32px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .ft-results-text h3 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: #1a1a1a;
-            margin: 0 0 12px 0;
+            margin: 0 0 16px 0;
             line-height: 1.3;
         }
 
         .ft-results-text p {
-            font-size: 14px;
+            font-size: 16px;
             color: #4a5568;
-            line-height: 1.5;
+            line-height: 1.6;
             margin: 0;
         }
 
         @media (max-width: 768px) {
             .ft-results-image {
-                height: 150px;
-                font-size: 14px;
+                border-radius: 10px;
+            }
+            
+            .ft-results-image:hover img {
+                transform: none; /* Disable hover effect on mobile */
             }
             
             .ft-results-text {
@@ -141,7 +149,8 @@
             border-radius: 20px;
             padding: 32px 24px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            will-change: transform;
         }
 
         .ft-incom-card {
@@ -228,7 +237,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            min-width: 280px;
+            flex-shrink: 0;
         }
 
         .ft-component-icon {
@@ -249,17 +258,18 @@
             height: 1px;
             background-image: repeating-linear-gradient(
                 to right,
-                #d1d5db 0,
-                #d1d5db 4px,
+                rgba(206, 243, 85, 0.6) 0,
+                rgba(206, 243, 85, 0.6) 4px,
                 transparent 4px,
                 transparent 8px
             );
-            margin: 0 16px;
+            margin: 0;
+            align-self: center;
         }
 
         .ft-component-right {
             text-align: right;
-            min-width: 180px;
+            flex-shrink: 0;
         }
 
         .ft-component-amount {
@@ -662,13 +672,13 @@
             height: 1px;
             background-image: repeating-linear-gradient(
                 to right,
-                #d1d5db 0,
-                #d1d5db 4px,
+                rgba(206, 243, 85, 0.6) 0,
+                rgba(206, 243, 85, 0.6) 4px,
                 transparent 4px,
                 transparent 8px
             );
-            margin: 10px 8px 0 8px;
-            align-self: flex-start;
+            margin: 0;
+            align-self: center;
         }
 
         .ft-vtc-value {
@@ -795,10 +805,11 @@
             border: 2px solid #e0e4e7;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: border-color 0.2s ease;
             background: #ffffff;
             box-sizing: border-box;
             height: 48px; /* Consistent height for all inputs */
+            will-change: border-color;
         }
 
         .ft-form-input:focus {
@@ -968,8 +979,8 @@
         .ft-vehicle-group {
             position: relative;
             z-index: 2;
-            margin-bottom: 48px; /* Add extra space after vehicle selection */
-            padding-bottom: 20px; /* Additional padding for clearance */
+            margin-bottom: 32px; /* Add extra space after vehicle selection */
+            padding-bottom: 12px; /* Additional padding for clearance */
         }
 
         .ft-vehicle-option {
@@ -978,7 +989,7 @@
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
             background: #ffffff;
             font-weight: 500;
             display: flex;
@@ -987,6 +998,7 @@
             justify-content: center;
             gap: 4px;
             height: 100%;
+            will-change: border-color, background-color;
         }
 
         .ft-vehicle-option:hover {
@@ -1026,9 +1038,15 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: background-color 0.2s ease, transform 0.1s ease;
             flex: 1;
             height: 48px; /* Consistent button height */
+            will-change: background-color;
+            transform: translateZ(0); /* Hardware acceleration */
+        }
+
+        .ft-btn:active {
+            transform: translateY(1px);
         }
 
         .ft-btn-secondary {
@@ -1232,6 +1250,12 @@
                 box-sizing: border-box;
                 padding: 0;
             }
+
+            /* Additional mobile spacing for vehicle group */
+            .ft-vehicle-group {
+                margin-bottom: 32px !important;
+                padding-bottom: 16px !important;
+            }
             
             .ft-vehicle-option {
                 padding: 8px 6px;
@@ -1284,6 +1308,9 @@
 
         /* Small mobile screens */
         @media (max-width: 480px) {
+            .ft-results-image {
+                border-radius: 8px;
+            }
             .financial-tool-container {
                 margin: 12px auto;
                 padding: 0;
@@ -1365,6 +1392,12 @@
                 gap: 8px;
                 width: 100%;
                 box-sizing: border-box;
+            }
+
+            /* Extra spacing for small mobile screens */
+            .ft-vehicle-group {
+                margin-bottom: 36px !important;
+                padding-bottom: 20px !important;
             }
 
             .ft-vehicle-option {
@@ -1639,10 +1672,9 @@
 
                         <!-- Right side - Image and text content -->
                         <div class="ft-results-right">
-                            <!-- Image placeholder -->
+                            <!-- Image -->
                             <div class="ft-results-image">
-                                📸 Image placeholder<br>
-                                <small>(300x330px)</small>
+                                <img src="https://cdn.prod.website-files.com/6889fc5ff91302573d0cb517/68935c725bdce88de560d66d_Capture%20d%27%C3%A9cran%202025-08-06%20154002.webp" alt="INCOM - Chauffeur VTC">
                             </div>
                             
                             <!-- Text content -->
