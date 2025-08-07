@@ -25,6 +25,101 @@
 
         /* NEW RESULTS PAGE LAYOUT - MATCHING SCREENSHOT */
     
+        /* Results container layout */
+        .ft-results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        @media (min-width: 769px) {
+            .ft-results-container {
+                flex-direction: row;
+                gap: 40px;
+                align-items: flex-start;
+            }
+        }
+
+        .ft-results-left {
+            flex: 1;
+        }
+
+        .ft-results-right {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px; /* Align with comparison cards margin */
+        }
+
+        @media (max-width: 768px) {
+            .ft-results-right {
+                flex: none;
+                order: -1; /* Show before results on mobile */
+            }
+        }
+
+        /* Image placeholder */
+        .ft-results-image {
+            width: 100%;
+            height: 330px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Text content below image */
+        .ft-results-text {
+            background: #ffffff;
+            border: 1px solid #e0e4e7;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .ft-results-text h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
+        .ft-results-text p {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .ft-results-image {
+                height: 150px;
+                font-size: 14px;
+            }
+            
+            .ft-results-text {
+                padding: 20px;
+            }
+            
+            .ft-results-text h3 {
+                font-size: 16px;
+            }
+            
+            .ft-results-text p {
+                font-size: 13px;
+            }
+        }
+    
         /* Top comparison cards */
         .ft-comparison-cards {
             display: grid;
@@ -1444,92 +1539,106 @@
 
                 <!-- Results Section -->
                 <div id="resultsSection" style="display: none;">
-                    <!-- Top comparison cards -->
-                    <div class="ft-comparison-cards">
-                        <!-- INCOM Card (highlighted) -->
-                        <div class="ft-comparison-card ft-incom-card">
-                            <h4 class="ft-card-title">Salaire Net avec INCOM</h4>
-                            <div class="ft-card-amount" id="result-incom-amount">-</div>
-                            <div class="ft-card-percentage" id="result-incom-percentage">-</div>
+                    <div class="ft-results-container">
+                        <!-- Left side - Results content -->
+                        <div class="ft-results-left">
+                            <!-- Top comparison cards -->
+                            <div class="ft-comparison-cards">
+                                <!-- INCOM Card (highlighted) -->
+                                <div class="ft-comparison-card ft-incom-card">
+                                    <h4 class="ft-card-title">Salaire Net avec INCOM</h4>
+                                    <div class="ft-card-amount" id="result-incom-amount">-</div>
+                                    <div class="ft-card-percentage" id="result-incom-percentage">-</div>
+                                </div>
+                            </div>
+
+                            <!-- Detailed breakdown section -->
+                            <div class="ft-salary-breakdown">
+
+                                <!-- Salary components list -->
+                                <div class="ft-salary-components">
+                                    <!-- Salaire Net Avant Impôts -->
+                                    <div class="ft-component-item">
+                                        <div class="ft-component-left">
+                                            <span class="ft-component-icon">💰</span>
+                                            <span class="ft-component-label">Salaire net avant impôts</span>
+                                        </div>
+                                        <div class="ft-component-dots"></div>
+                                        <div class="ft-component-right">
+                                            <span class="ft-component-amount" id="component-salaire-net">- €</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Indemnités kilométriques -->
+                                    <div class="ft-component-item">
+                                        <div class="ft-component-left">
+                                            <span class="ft-component-icon">🚗</span>
+                                            <span class="ft-component-label">Indemnités kilométriques</span>
+                                        </div>
+                                        <div class="ft-component-dots"></div>
+                                        <div class="ft-component-right">
+                                            <span class="ft-component-amount" id="component-indemnites-km">- €</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Indemnités repas -->
+                                    <div class="ft-component-item">
+                                        <div class="ft-component-left">
+                                            <span class="ft-component-icon">🍽️</span>
+                                            <span class="ft-component-label">Indemnités repas</span>
+                                        </div>
+                                        <div class="ft-component-dots"></div>
+                                        <div class="ft-component-right">
+                                            <span class="ft-component-amount" id="component-indemnites-repas">- €</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Indemnités Congés Payés -->
+                                    <div class="ft-component-item">
+                                        <div class="ft-component-left">
+                                            <span class="ft-component-icon">🏖️</span>
+                                            <span class="ft-component-label">Indemnités Congés Payés</span>
+                                        </div>
+                                        <div class="ft-component-dots"></div>
+                                        <div class="ft-component-right">
+                                            <span class="ft-component-amount" id="component-conges-payes">- €</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Indemnités Rupture Conventionnelle -->
+                                    <div class="ft-component-item">
+                                        <div class="ft-component-left">
+                                            <span class="ft-component-icon">🤝</span>
+                                            <span class="ft-component-label">Provision de fin de contrat (PFC)</span>
+                                        </div>
+                                        <div class="ft-component-dots"></div>
+                                        <div class="ft-component-right">
+                                            <span class="ft-component-amount" id="component-rupture-conventionnelle">- €</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="ft-results-actions">
+                                <button type="button" class="ft-btn ft-btn-primary" id="ft-restartBtn">Nouvelle simulation</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Detailed breakdown section -->
-                    <div class="ft-salary-breakdown">
-
-                        <!-- Salary components list -->
-                        <div class="ft-salary-components">
-                            <!-- Salaire Net Avant Impôts -->
-                            <div class="ft-component-item">
-                                <div class="ft-component-left">
-                                    <span class="ft-component-icon">💰</span>
-                                    <span class="ft-component-label">Salaire net avant impôts</span>
-                                </div>
-                                <div class="ft-component-dots"></div>
-                                <div class="ft-component-right">
-                                    <span class="ft-component-amount" id="component-salaire-net">- €</span>
-                                    <span class="ft-component-monthly">(<span id="component-salaire-net-monthly">-</span> / mois)</span>
-                                </div>
+                        <!-- Right side - Image and text content -->
+                        <div class="ft-results-right">
+                            <!-- Image placeholder -->
+                            <div class="ft-results-image">
+                                📸 Image placeholder<br>
+                                <small>(300x330px)</small>
                             </div>
-
-                            <!-- Indemnités kilométriques -->
-                            <div class="ft-component-item">
-                                <div class="ft-component-left">
-                                    <span class="ft-component-icon">🚗</span>
-                                    <span class="ft-component-label">Indemnités kilométriques</span>
-                                </div>
-                                <div class="ft-component-dots"></div>
-                                <div class="ft-component-right">
-                                    <span class="ft-component-amount" id="component-indemnites-km">- €</span>
-                                    <span class="ft-component-monthly">(<span id="component-indemnites-km-monthly">-</span> / mois)</span>
-                                </div>
-                            </div>
-
-                            <!-- Indemnités repas -->
-                            <div class="ft-component-item">
-                                <div class="ft-component-left">
-                                    <span class="ft-component-icon">🍽️</span>
-                                    <span class="ft-component-label">Indemnités repas</span>
-                                </div>
-                                <div class="ft-component-dots"></div>
-                                <div class="ft-component-right">
-                                    <span class="ft-component-amount" id="component-indemnites-repas">- €</span>
-                                    <span class="ft-component-monthly">(<span id="component-indemnites-repas-monthly">-</span> / mois)</span>
-                                </div>
-                            </div>
-
-                            <!-- Indemnités Congés Payés -->
-                            <div class="ft-component-item">
-                                <div class="ft-component-left">
-                                    <span class="ft-component-icon">🏖️</span>
-                                    <span class="ft-component-label">Indemnités Congés Payés</span>
-                                </div>
-                                <div class="ft-component-dots"></div>
-                                <div class="ft-component-right">
-                                    <span class="ft-component-amount" id="component-conges-payes">- €</span>
-                                    <span class="ft-component-monthly">(<span id="component-conges-payes-monthly">-</span> / mois)</span>
-                                </div>
-                            </div>
-
-                            <!-- Indemnités Rupture Conventionnelle -->
-                            <div class="ft-component-item">
-                                <div class="ft-component-left">
-                                    <span class="ft-component-icon">🤝</span>
-                                    <span class="ft-component-label">Provision de fin de contrat (PFC)</span>
-                                </div>
-                                <div class="ft-component-dots"></div>
-                                <div class="ft-component-right">
-                                    <span class="ft-component-amount" id="component-rupture-conventionnelle">- €</span>
-                                    <span class="ft-component-monthly">(<span id="component-rupture-conventionnelle-monthly">-</span> / mois)</span>
-                                </div>
+                            
+                            <!-- Text content -->
+                            <div class="ft-results-text">
+                                <h3>Pourquoi choisir INCOM ?</h3>
+                                <p>Rejoignez plus de 10 000 chauffeurs qui ont choisi la sécurité du salariat tout en gardant leur liberté. Avec INCOM, bénéficiez d'un statut salarié, de protections sociales complètes et d'un accompagnement personnalisé.</p>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="ft-results-actions">
-                        <button type="button" class="ft-btn ft-btn-primary" id="ft-restartBtn">Nouvelle simulation</button>
-                        <button type="button" class="ft-btn ft-btn-outline" id="ft-downloadBtn">Télécharger en PDF</button>
                     </div>
                 </div>
             </div>
@@ -1764,11 +1873,6 @@
                 // Restart button handler
                 document.getElementById('ft-restartBtn').addEventListener('click', function() {
                     restartSimulation();
-                });
-
-                // Download PDF button handler (placeholder)
-                document.getElementById('ft-downloadBtn').addEventListener('click', function() {
-                    alert('Fonctionnalité PDF à venir !');
                 });
             }
 
@@ -2047,19 +2151,14 @@
 
                 // Update salary components
                 document.getElementById('component-salaire-net').textContent = formatEuro(results.salaireNetAvantImpots);
-                document.getElementById('component-salaire-net-monthly').textContent = formatEuro(results.salaireNetAvantImpots);
 
                 document.getElementById('component-indemnites-km').textContent = formatEuro(Math.abs(results.indemniteKm));
-                document.getElementById('component-indemnites-km-monthly').textContent = formatEuro(Math.abs(results.indemniteKm));
 
                 document.getElementById('component-indemnites-repas').textContent = formatEuro(Math.abs(results.indemniteRepas));
-                document.getElementById('component-indemnites-repas-monthly').textContent = formatEuro(Math.abs(results.indemniteRepas));
 
                 document.getElementById('component-conges-payes').textContent = formatEuro(results.indemniteCongesPayes);
-                document.getElementById('component-conges-payes-monthly').textContent = formatEuro(results.indemniteCongesPayes);
 
                 document.getElementById('component-rupture-conventionnelle').textContent = formatEuro(results.indemniteRuptureConventionnelle);
-                document.getElementById('component-rupture-conventionnelle-monthly').textContent = formatEuro(results.indemniteRuptureConventionnelle);
 
                 // Hide form and show results
                 document.getElementById('formSection').style.display = 'none';
