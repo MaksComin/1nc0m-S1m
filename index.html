@@ -54,10 +54,15 @@
         }
 
         @media (max-width: 768px) {
+            .ft-results-container {
+                flex-direction: column !important;
+            }
+            
             .ft-results-right {
-                flex: none;
-                order: 2; /* Show after results on mobile */
+                flex: none !important;
+                order: 2 !important; /* Show after results on mobile */
                 margin-top: 40px;
+                width: 100% !important;
             }
         }
 
@@ -1674,7 +1679,10 @@
                         <div class="ft-results-right">
                             <!-- Image -->
                             <div class="ft-results-image">
-                                <img src="https://cdn.prod.website-files.com/6889fc5ff91302573d0cb517/68935c725bdce88de560d66d_Capture%20d%27%C3%A9cran%202025-08-06%20154002.webp" alt="INCOM - Chauffeur VTC">
+                                <img src="https://cdn.prod.website-files.com/6889fc5ff91302573d0cb517/68935c725bdce88de560d66d_Capture%20d%27%C3%A9cran%202025-08-06%20154002.webp" 
+                                     alt="INCOM - Chauffeur VTC"
+                                     loading="lazy"
+                                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 40px; text-align: center; color: #6c757d;\'>📸 Image INCOM</div>';">
                             </div>
                             
                             <!-- Text content -->
@@ -2182,6 +2190,17 @@
                 const formTextContent = document.getElementById('formTextContent');
                 if (formTextContent) {
                     formTextContent.style.display = 'none';
+                }
+
+                // Force mobile layout on small screens
+                if (window.innerWidth <= 768) {
+                    const resultsContainer = document.querySelector('.ft-results-container');
+                    const resultsRight = document.querySelector('.ft-results-right');
+                    if (resultsContainer && resultsRight) {
+                        resultsContainer.style.flexDirection = 'column';
+                        resultsRight.style.order = '2';
+                        resultsRight.style.marginTop = '40px';
+                    }
                 }
 
                 // Calculate comparison values
