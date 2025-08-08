@@ -2265,6 +2265,53 @@
                 });
             }
 
+            // Airtable integration function
+            async function sendToAirtable(formData, calculatedResult) {
+                const AIRTABLE_API_TOKEN = 'patMDlNh5ZIAwmqPs.af8155ce6bf8be0388920787c233404a3ac7de874aac7c0ab3a2be1efd5400da';
+                const BASE_ID = 'appBEi11h3O2V5Dnx';
+                const TABLE_NAME = encodeURIComponent('Website Simulateur');
+                const ENDPOINT = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
+
+                try {
+                    // Prepare the data for Airtable
+                    const airtableData = {
+                        records: [{
+                            fields: {
+                                'Email': formData.email || '',
+                                'Chiffre d\'affaires': formData.turnover ? parseInt(formData.turnover) : 0,
+                                'Frais professionnels': formData.expenses ? parseInt(formData.expenses) : 0,
+                                'Type véhicule': formData.vehicleType || '',
+                                'Titularité véhicule': formData.ownership || '',
+                                'Montant mensuel': formData.monthlyPayment ? parseInt(formData.monthlyPayment) : null,
+                                'Date soumission': new Date().toISOString(),
+                                'Résultat calculé': calculatedResult || ''
+                            }
+                        }]
+                    };
+
+                    // Send data to Airtable
+                    const response = await fetch(ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${AIRTABLE_API_TOKEN}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(airtableData)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('✅ Données envoyées avec succès à Airtable:', result);
+                    } else {
+                        const errorText = await response.text();
+                        console.error('❌ Erreur Airtable:', response.status, errorText);
+                    }
+                } catch (error) {
+                    console.error('❌ Erreur lors de l\'envoi vers Airtable:', error);
+                    // N'interrompt pas l'expérience utilisateur en cas d'erreur
+                }
+            }
+
             function displayResults(results) {
                 // Hide the form text content (heading and info box)
                 const formTextContent = document.getElementById('formTextContent');
@@ -2308,6 +2355,10 @@
                 // Hide form and show results
                 document.getElementById('formSection').style.display = 'none';
                 document.getElementById('resultsSection').style.display = 'block';
+
+                // Send data to Airtable after displaying results
+                const calculatedResult = document.getElementById('result-total-amount').textContent;
+                sendToAirtable(financialToolData, calculatedResult);
             }
 
             function formatEuro(value) {
