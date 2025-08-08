@@ -2125,6 +2125,16 @@
                 // Hide form and show results
                 document.getElementById('formSection').style.display = 'none';
                 document.getElementById('resultsSection').style.display = 'block';
+
+                // Auto-scroll to top on mobile after showing results
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
             }
 
             function formatEuro(value) {
