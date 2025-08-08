@@ -1801,40 +1801,45 @@
 
                 // Button handlers
                 document.getElementById('ft-resultBtn').addEventListener('click', function() {
-                    // Multiple scroll methods to ensure it works in iframe on mobile
-                    if (window.innerWidth <= 768) {
-                        // Method 1: Standard window scroll
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Method 2: Document element scroll
-                        document.documentElement.scrollTop = 0;
-                        
-                        // Method 3: Body scroll
-                        document.body.scrollTop = 0;
-                        
-                        // Method 4: Parent iframe scroll (if exists)
+                    // Enhanced scroll functionality for iframe
+                    function scrollToTop() {
                         try {
+                            // Try to scroll the parent window first (for iframe)
                             if (window.parent && window.parent !== window) {
+                                // Post a message to parent to scroll
+                                window.parent.postMessage({
+                                    type: 'scrollToTop',
+                                    source: 'incom-calculator'
+                                }, '*');
+                                
+                                // Also try direct parent scroll
                                 window.parent.scrollTo({
                                     top: 0,
                                     behavior: 'smooth'
                                 });
                             }
                         } catch (e) {
-                            // Ignore cross-origin errors
+                            console.log('Cross-origin restriction, using alternative method');
                         }
                         
-                        // Method 5: Scroll to top element
-                        const topElement = document.body.firstElementChild;
-                        if (topElement) {
-                            topElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
+                        // Always try these methods as backup
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                        
+                        document.documentElement.scrollTop = 0;
+                        document.body.scrollTop = 0;
+                        
+                        // Force immediate scroll as backup
+                        setTimeout(() => {
+                            document.documentElement.scrollTop = 0;
+                            document.body.scrollTop = 0;
+                        }, 100);
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        scrollToTop();
                     }
                     
                     validateAndSubmit();
