@@ -38,37 +38,22 @@
                 display: grid;
                 grid-template-columns: 1fr 400px;
                 grid-template-rows: auto auto auto;
-                gap: 40px;
+                gap: 32px;
                 align-items: start;
             }
             
-            /* Desktop layout */
-            .ft-comparison-cards {
+            /* Desktop layout for unified card */
+            .ft-unified-results-card {
                 grid-column: 1;
                 grid-row: 1;
-            }
-            
-            .ft-salary-breakdown {
-                grid-column: 1;
-                grid-row: 2;
-            }
-            
-            .ft-results-actions {
-                grid-column: 1;
-                grid-row: 3;
-            }
-            
-            .ft-results-image {
-                grid-column: 2;
-                grid-row: 1;
-                margin-top: 40px;
+                margin: 0;
             }
             
             .ft-results-text {
                 grid-column: 2;
-                grid-row: 2;
+                grid-row: 1;
                 align-self: start;
-                margin-top: 20px;
+                margin-top: 0;
             }
         }
 
@@ -109,44 +94,22 @@
             order: 1 !important;
         }
 
-        body.mobile-device .ft-results-image {
-            order: 2 !important;
-            margin: 20px 0 !important;
-        }
+
 
         body.mobile-device .ft-salary-breakdown {
             order: 3 !important;
         }
 
-        body.mobile-device .ft-results-actions {
-            order: 4 !important;
-        }
-
         body.mobile-device .ft-results-text {
-            order: 5 !important;
+            order: 4 !important;
             margin-top: 20px !important;
         }
 
-        /* Image container - thumbnail style */
-        .ft-results-image {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background: #f8f9fa;
+        body.mobile-device .ft-results-actions {
+            order: 5 !important;
         }
 
-        .ft-results-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
 
-        .ft-results-image:hover img {
-            transform: scale(1.02);
-        }
 
         /* Text content below image */
         .ft-results-text {
@@ -172,14 +135,13 @@
             margin: 0;
         }
 
+        .ft-results-text .ft-results-actions {
+            margin-top: 24px;
+            justify-content: flex-start;
+        }
+
         @media (max-width: 768px) {
-            .ft-results-image {
-                border-radius: 10px;
-            }
-            
-            .ft-results-image:hover img {
-                transform: none; /* Disable hover effect on mobile */
-            }
+
             
             .ft-results-text {
                 padding: 20px;
@@ -194,162 +156,142 @@
             }
         }
     
-        /* Top comparison cards */
-        .ft-comparison-cards {
-            display: grid;
-            grid-template-columns: 1fr; /* Single column by default */
-            gap: 24px;
-            margin: 40px 0;
-        }
-
-        /* Only use two columns on desktop if there are multiple cards */
-        @media (min-width: 769px) {
-            .ft-comparison-cards:has(.ft-incom-card + .ft-without-card) {
-                grid-template-columns: 1fr 1fr; /* Two columns only if both cards exist */
-            }
-        }
-
-        .ft-comparison-card {
-            background: #ffffff;
-            border: 2px solid #e0e4e7;
-            border-radius: 20px;
-            padding: 32px 24px;
-            text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            will-change: transform;
-        }
-
-        .ft-incom-card {
-            border-color: #cef355;
-            background: linear-gradient(135deg, #e0f7fa, #ffffff);
-            position: relative;
-        }
-
-        .ft-card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin: 0 0 16px 0;
-        }
-
-        .ft-card-amount {
-            font-size: 40px;
-            font-weight: 900;
-            color: #1a1a1a;
-            margin: 0 0 8px 0;
-            line-height: 1.1;
-        }
-
-        .ft-card-percentage {
-            font-size: 16px;
-            font-weight: 600;
-            margin: 0;
-            padding: 6px 16px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        .ft-incom-card .ft-card-percentage {
-            background: #cef355;
-            color: rgb(0, 0, 0);
-        }
-
-        /* Salary breakdown section */
-        .ft-salary-breakdown {
+        /* UNIFIED RESULTS CARD - COMBINING HEADER AND BREAKDOWN */
+        .ft-unified-results-card {
             background: #ffffff;
             border: 1px solid #e0e4e7;
             border-radius: 20px;
-            padding: 32px;
-            margin: 32px 0;
+            padding: 0;
+            margin: 0 0 32px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
-        .ft-breakdown-header {
-            display: none; /* Hide the entire breakdown header section */
+        .ft-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 32px 32px 24px 32px;
         }
 
-        .ft-breakdown-right {
-            text-align: center;
+        .ft-header-left {
+            flex: 1;
+            max-width: 60%;
         }
 
-        .ft-breakdown-total-amount {
-            font-size: 36px;
-            font-weight: 900;
-            color: #1a1a1a;
-            margin-bottom: 4px;
+        .ft-main-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0D073F;
+            margin: 0 0 16px 0;
+            line-height: 1.2;
+        }
+
+        .ft-restitution-pill {
+            background: #cef355;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 0 0 12px 0;
+        }
+
+        .ft-gross-salary-line {
+            font-size: 16px;
+            font-weight: 500;
+            color: #4a5568;
+            margin: 0;
+        }
+
+        .ft-header-right {
+            text-align: right;
+            min-width: 200px;
+        }
+
+        .ft-total-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin: 0 0 8px 0;
+        }
+
+        .ft-total-amount {
+            font-size: 48px;
+            font-weight: 600;
+            color: #000000;
+            margin: 0 0 4px 0;
             line-height: 1.1;
         }
 
-        .ft-breakdown-monthly {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 500;
+
+        .ft-card-separator {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e0e4e7 20%, #e0e4e7 80%, transparent);
+            margin: 0 32px;
         }
 
-        /* Salary components list */
-        .ft-salary-components {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .ft-card-breakdown {
+            padding: 24px 32px 32px 32px;
         }
 
-        .ft-component-item {
+        .ft-breakdown-item {
             display: flex;
             align-items: center;
-            padding: 16px 0;
+            padding: 2px 0;
             min-height: 60px;
         }
 
-        .ft-component-left {
+        .ft-breakdown-item:first-child {
+            padding-top: 24px;
+        }
+
+        .ft-item-left {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-shrink: 0;
+            min-width: 10px;
         }
 
-        .ft-component-icon {
+        .ft-item-icon {
             font-size: 20px;
             width: 24px;
             text-align: center;
             flex-shrink: 0;
         }
 
-        .ft-component-label {
+        .ft-item-label {
             font-size: 16px;
-            font-weight: 500;
-            color: #1a1a1a;
+            font-weight: 600;
+            color: #0D073F;
         }
 
-        .ft-component-dots {
+        .ft-item-connector {
             flex: 1;
             height: 1px;
             background-image: repeating-linear-gradient(
                 to right,
-                rgba(206, 243, 85, 0.6) 0,
-                rgba(206, 243, 85, 0.6) 4px,
+                #ade7a7 0,
+                #ade7a7 4px,
                 transparent 4px,
                 transparent 8px
             );
-            margin: 0;
+            margin: 0 20px;
             align-self: center;
         }
 
-        .ft-component-right {
+        .ft-item-right {
             text-align: right;
             flex-shrink: 0;
         }
 
-        .ft-component-amount {
+        .ft-item-amount {
             font-size: 18px;
-            font-weight: 700;
-            color: #1a1a1a;
+            font-weight: 500;
+            color: #0D073F;
             display: block;
             margin-bottom: 2px;
-        }
-
-        .ft-component-monthly {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 500;
         }
 
         /* Action Buttons */
@@ -357,30 +299,87 @@
             display: flex;
             gap: 16px;
             justify-content: center;
-            margin-top: 40px;
-            padding-top: 32px;
+            margin-top: 1px;
+            padding-top: 3px;
             border-top: 1px solid #e0e4e7;
         }
 
-        /* Mobile Responsive */
+        /* Mobile Responsive for Unified Design */
         @media (max-width: 768px) {
-            .ft-comparison-cards {
-                grid-template-columns: 1fr;
-                gap: 16px;
+            .ft-unified-results-card {
                 margin: 24px 0;
             }
 
-            .ft-comparison-card {
-                padding: 24px 20px;
+            .ft-card-header {
+                flex-direction: column;
+                gap: 24px;
+                padding: 24px 20px 20px 20px;
+                align-items: center;
             }
 
-            .ft-card-amount {
-                font-size: 32px;
+            .ft-header-left {
+                max-width: 100%;
+                order: 1;
+                width: 100%;
+                text-align: center;
             }
 
-            .ft-salary-breakdown {
-                padding: 24px 20px;
-                margin: 24px 0;
+            .ft-header-right {
+                text-align: center;
+                order: 2;
+                min-width: auto;
+                width: 100%;
+            }
+
+            .ft-main-title {
+                font-size: 24px;
+                text-align: center;
+                margin: 0 0 16px 0;
+            }
+
+            .ft-restitution-pill {
+                display: block;
+                text-align: center;
+                margin: 0 auto 12px auto;
+                width: fit-content;
+            }
+
+    .ft-gross-salary-line {
+        text-align: center;
+        margin: 0;
+    }
+
+    .ft-total-amount {
+        font-size: 40px;
+    }
+
+            .ft-card-separator {
+                margin: 0 20px;
+            }
+
+            .ft-card-breakdown {
+                padding: 20px 20px 24px 20px;
+            }
+
+            .ft-breakdown-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 16px 0;
+            }
+
+            .ft-item-left {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .ft-item-connector {
+                display: none;
+            }
+
+            .ft-item-right {
+                text-align: left;
+                margin-left: 36px;
             }
 
             .ft-breakdown-header {
@@ -474,7 +473,7 @@
         .financial-tool-container {
             max-width: 1200px;
             margin: 20px auto;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: "General Sans", Arial, sans-serif;
             line-height: 1.5;
             padding: 0 20px;
         }
@@ -761,7 +760,7 @@
             display: flex;
             gap: 16px;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: 4px;
             padding-top: 32px;
             border-top: 1px solid #e0e4e7;
         }
@@ -1133,6 +1132,22 @@
             background: #b8e832;
         }
 
+        /* Style pour les liens avec classe ft-btn */
+        a.ft-btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        a.ft-btn:hover {
+            text-decoration: none;
+        }
+
+        a.ft-btn:visited {
+            color: inherit;
+        }
+
         .ft-error-message {
             color: #dc3545;
             font-size: 11px;
@@ -1374,9 +1389,7 @@
 
         /* Small mobile screens */
         @media (max-width: 480px) {
-            .ft-results-image {
-                border-radius: 8px;
-            }
+
             .financial-tool-container {
                 margin: 12px auto;
                 padding: 0;
@@ -1651,99 +1664,97 @@
                 <!-- Results Section -->
                 <div id="resultsSection" style="display: none;">
                     <div class="ft-results-container">
-                        <!-- Top comparison cards -->
-                        <div class="ft-comparison-cards">
-                            <!-- INCOM Card (highlighted) -->
-                            <div class="ft-comparison-card ft-incom-card">
-                                <h4 class="ft-card-title">Salaire Net avec INCOM</h4>
-                                <div class="ft-card-amount" id="result-incom-amount">-</div>
-                                <div class="ft-card-percentage" id="result-incom-percentage">-</div>
+                        <!-- Unified results card combining header and breakdown -->
+                        <div class="ft-unified-results-card">
+                            <!-- Header section -->
+                            <div class="ft-card-header">
+                                <div class="ft-header-left">
+                                    <h2 class="ft-main-title">Salaire Net avec INCOM</h2>
+                                    <div class="ft-gross-salary-line" id="result-gross-salary-line">Salaire brut : 1463 € / mois</div>
+                                </div>
+                                <div class="ft-header-right">
+                                    <div class="ft-total-amount" id="result-total-amount">1900 €</div>
+                                    <div class="ft-restitution-pill" id="result-restitution-pill">78 % de restitution</div>
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- Image (will be reordered on mobile) -->
-                        <div class="ft-results-image">
-                            <img src="https://cdn.prod.website-files.com/6889fc5ff91302573d0cb517/68935c725bdce88de560d66d_Capture%20d%27%C3%A9cran%202025-08-06%20154002.webp" 
-                                 alt="INCOM - Chauffeur VTC"
-                                 loading="lazy"
-                                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 40px; text-align: center; color: #6c757d;\'>📸 Image INCOM</div>';">
-                        </div>
-
-                        <!-- Detailed breakdown section -->
-                        <div class="ft-salary-breakdown">
-                            <!-- Salary components list -->
-                            <div class="ft-salary-components">
+                            
+                            <!-- Separator line -->
+                            <div class="ft-card-separator"></div>
+                            
+                            <!-- Breakdown section -->
+                            <div class="ft-card-breakdown">
                                 <!-- Salaire Net Avant Impôts -->
-                                <div class="ft-component-item">
-                                    <div class="ft-component-left">
-                                        <span class="ft-component-icon">💰</span>
-                                        <span class="ft-component-label">Salaire net avant impôts</span>
+                                <div class="ft-breakdown-item">
+                                    <div class="ft-item-left">
+                                        <span class="ft-item-icon">💰</span>
+                                        <span class="ft-item-label">Salaire net avant impôts</span>
                                     </div>
-                                    <div class="ft-component-dots"></div>
-                                    <div class="ft-component-right">
-                                        <span class="ft-component-amount" id="component-salaire-net">- €</span>
+                                    <div class="ft-item-connector"></div>
+                                    <div class="ft-item-right">
+                                        <span class="ft-item-amount" id="component-salaire-net">497,33 €</span>
                                     </div>
                                 </div>
 
                                 <!-- Indemnités kilométriques -->
-                                <div class="ft-component-item">
-                                    <div class="ft-component-left">
-                                        <span class="ft-component-icon">🚗</span>
-                                        <span class="ft-component-label">Indemnités kilométriques</span>
+                                <div class="ft-breakdown-item">
+                                    <div class="ft-item-left">
+                                        <span class="ft-item-icon">🚗</span>
+                                        <span class="ft-item-label">Indemnités kilométriques</span>
                                     </div>
-                                    <div class="ft-component-dots"></div>
-                                    <div class="ft-component-right">
-                                        <span class="ft-component-amount" id="component-indemnites-km">- €</span>
+                                    <div class="ft-item-connector"></div>
+                                    <div class="ft-item-right">
+                                        <span class="ft-item-amount" id="component-indemnites-km">2 049,60 €</span>
                                     </div>
                                 </div>
 
                                 <!-- Indemnités repas -->
-                                <div class="ft-component-item">
-                                    <div class="ft-component-left">
-                                        <span class="ft-component-icon">🍽️</span>
-                                        <span class="ft-component-label">Indemnités repas</span>
+                                <div class="ft-breakdown-item">
+                                    <div class="ft-item-left">
+                                        <span class="ft-item-icon">🍟</span>
+                                        <span class="ft-item-label">Indemnités repas</span>
                                     </div>
-                                    <div class="ft-component-dots"></div>
-                                    <div class="ft-component-right">
-                                        <span class="ft-component-amount" id="component-indemnites-repas">- €</span>
+                                    <div class="ft-item-connector"></div>
+                                    <div class="ft-item-right">
+                                        <span class="ft-item-amount" id="component-indemnites-repas">485,30 €</span>
                                     </div>
                                 </div>
 
                                 <!-- Indemnités Congés Payés -->
-                                <div class="ft-component-item">
-                                    <div class="ft-component-left">
-                                        <span class="ft-component-icon">🏖️</span>
-                                        <span class="ft-component-label">Indemnités Congés Payés</span>
+                                <div class="ft-breakdown-item">
+                                    <div class="ft-item-left">
+                                        <span class="ft-item-icon">🎨</span>
+                                        <span class="ft-item-label">Indemnités Congés Payés</span>
                                     </div>
-                                    <div class="ft-component-dots"></div>
-                                    <div class="ft-component-right">
-                                        <span class="ft-component-amount" id="component-conges-payes">- €</span>
+                                    <div class="ft-item-connector"></div>
+                                    <div class="ft-item-right">
+                                        <span class="ft-item-amount" id="component-conges-payes">62,96 €</span>
                                     </div>
                                 </div>
 
-                                <!-- Indemnités Rupture Conventionnelle -->
-                                <div class="ft-component-item">
-                                    <div class="ft-component-left">
-                                        <span class="ft-component-icon">🤝</span>
-                                        <span class="ft-component-label">Provision de fin de contrat (PFC)</span>
+                                <!-- Provision de fin de contrat -->
+                                <div class="ft-breakdown-item">
+                                    <div class="ft-item-left">
+                                        <span class="ft-item-icon">🤝</span>
+                                        <span class="ft-item-label">Provision de fin de contrat (PFC)</span>
                                     </div>
-                                    <div class="ft-component-dots"></div>
-                                    <div class="ft-component-right">
-                                        <span class="ft-component-amount" id="component-rupture-conventionnelle">- €</span>
+                                    <div class="ft-item-connector"></div>
+                                    <div class="ft-item-right">
+                                        <span class="ft-item-amount" id="component-rupture-conventionnelle">13,23 €</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="ft-results-actions">
-                            <button type="button" class="ft-btn ft-btn-primary" id="ft-restartBtn">Nouvelle simulation</button>
-                        </div>
-
-                        <!-- Text content (will be last on mobile) -->
+                        <!-- Image (will be reordered on mobile) -->
+                        <!-- Text content -->
                         <div class="ft-results-text">
                             <h3>Pourquoi choisir INCOM ?</h3>
-                            <p>Rejoignez plus de 10 000 chauffeurs qui ont choisi la sécurité du salariat tout en gardant leur liberté. Avec INCOM, bénéficiez d'un statut salarié, de protections sociales complètes et d'un accompagnement personnalisé.</p>
+                            <p>Rejoignez les centaines de chauffeurs qui ont déjà choisi la sécurité du salariat tout en préservant leur liberté. Avec INCOM, profitez d'un statut salarié, de protections sociales solides et d'un accompagnement adapté à votre activité.</p>
+                            
+                            <!-- Action Button -->
+                            <div class="ft-results-actions">
+                                <a href="https://incom-services.typeform.com/website" class="ft-btn ft-btn-primary" id="ft-joinBtn" target="_blank">Rejoindre INCOM</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1976,10 +1987,6 @@
                     validateAndSubmit();
                 });
 
-                // Restart button handler
-                document.getElementById('ft-restartBtn').addEventListener('click', function() {
-                    restartSimulation();
-                });
             }
 
             function handleOwnershipChange(value) {
@@ -2130,11 +2137,11 @@
 
                 // 1. Calculate CA Brut TTC, TVA Due, and CA Net HT
                 const caBrutTTC = caNetTTC / 0.7; // CA NET TTC ÷ 0.7
-                const tvaDue = -(caBrutTTC * 0.10); // CA BRUT TTC × 10% (NEGATIVE)
-                const caNetHT = caNetTTC + tvaDue; // CA NET TTC + TVA DUE (TVA Due is negative, so this is actually subtraction)
+                const tvaDueNegative = -(caBrutTTC * 0.10); // CA BRUT TTC × 10% (NEGATIVE)
+                const caNetHT = caNetTTC + tvaDueNegative; // CA NET TTC + TVA DUE (TVA Due is negative, so this is actually subtraction)
                 
                 console.log('CA Brut TTC (CA Net TTC ÷ 0.7):', caBrutTTC);
-                console.log('TVA Due (CA Brut TTC × 10% - NEGATIVE):', tvaDue);
+                console.log('TVA Due (CA Brut TTC × 10% - NEGATIVE):', tvaDueNegative);
                 console.log('CA Net HT (CA Net TTC + TVA Due):', caNetHT);
 
                 // 2. Indemnité kilométrique
@@ -2155,31 +2162,48 @@
                 const indemniteKm = -(coefKm * caNetTTC); // Negative because it's a deduction
                 console.log(`Indemnité kilométrique ${vehicleNote}:`, indemniteKm);
 
-                // 3. TVA déductible calculation
-                // First part: 20% of vehicle cost if leasing or credit, 0 if owner or credit
+                // 3. Frais INCOM calculation (moved here to be available for TVA calculation)
+                const fraisIncomBase = caNetHT * 0.15; // 15% of CA net HT
+                const fraisIncom = fraisIncomBase < 720 ? -fraisIncomBase : -720; // Negative amount
+                console.log('Frais INCOM base (15% CA net HT):', fraisIncomBase);
+                console.log('Frais INCOM (negative):', fraisIncom);
+
+                // 4. TVA déductible calculation
+                // TVA due = 20% of CA Brut TTC
+                const tvaDue = caBrutTTC * 0.20;
+
+                // TVA récupérable components:
+                // 1. 20% of Frais INCOM (absolute positive value)
+                const tvaFraisIncom = Math.abs(fraisIncom) * 0.20;
+                
+                // 2. 20% of vehicle cost if leasing, 0 otherwise
                 let tvaVehicle = 0;
                 if (ownership === 'leasing') {
                     tvaVehicle = monthlyPayment * 0.20;
                 }
                 // Note: For 'credit', vehicle TVA = 0 as specified
 
-                // 20% on expense notes (frais pro)
+                // 3. 20% on expense notes (frais pro)
                 const tvaExpenses = fraisPro * 0.20;
 
-                // 20% of CA Brut TTC (already calculated above)
-                const tvaRecuperable = caBrutTTC * 0.20;
+                // Total TVA récupérable
+                const tvaRecuperableTotal = tvaFraisIncom + tvaVehicle + tvaExpenses;
 
-                // TVA déductible = minimum between the two calculations
-                const tvaRecuperableTotal = tvaVehicle + tvaExpenses;
-                const tvaDeductible = Math.min(tvaRecuperableTotal, tvaRecuperable);
+                // TVA déductible = minimum between TVA récupérable and TVA due
+                const tvaDeductible = Math.min(tvaRecuperableTotal, tvaDue);
                 
+                console.log('TVA Frais INCOM (20% de |Frais INCOM|):', tvaFraisIncom);
                 console.log('TVA véhicule (20% si leasing):', tvaVehicle);
                 console.log('TVA frais pro (20%):', tvaExpenses);
-                console.log('TVA récupérable (20% CA Brut TTC):', tvaRecuperable);
+                console.log('TVA due (20% CA Brut TTC):', tvaDue);
                 console.log('TVA récupérable total:', tvaRecuperableTotal);
-                console.log('TVA déductible (minimum):', tvaDeductible);
+                console.log('TVA déductible (minimum entre récupérable et due):', tvaDeductible);
 
-                // 4. Indemnité repas (negative amount - expense)
+                // 5. CA NET Driver calculation
+                const caNetDriver = caNetHT - Math.abs(fraisIncom); // CA net HT - Frais INCOM (subtracting absolute value)
+                console.log('CA NET Driver (CA net HT - Frais INCOM):', caNetDriver);
+
+                // 6. Indemnité repas (negative amount - expense)
                 const revenueRatio = caNetTTC / 100;
                 let indemniteRepas;
                 if (revenueRatio < 23) {
@@ -2190,14 +2214,14 @@
                 console.log('Ratio CA/100:', revenueRatio);
                 console.log('Indemnité repas (dépense):', indemniteRepas);
 
-                // 5. Calculate final result: Salaire Brut Avant Impôts
-                const salaireBrutAvantImpots = caNetHT + indemniteKm + tvaDeductible + indemniteRepas;
+                // 7. Calculate final result: Salaire Brut Avant Impôts
+                const salaireBrutAvantImpots = caNetDriver + indemniteKm + tvaDeductible + indemniteRepas;
 
-                // 6. Calculate Equivalent Unité d'Œuvre au SMIC and Salaire Net Avant Impôts
+                // 8. Calculate Equivalent Unité d'Œuvre au SMIC and Salaire Net Avant Impôts
                 const equivalentUniteOeuvre = salaireBrutAvantImpots / 13.84;
                 const salaireNetAvantImpots = equivalentUniteOeuvre * 9.40;
 
-                // 7. Calculate final allowances and Salaire Net
+                // 9. Calculate final allowances and Salaire Net
                 const indemniteCongesPayes = equivalentUniteOeuvre * 1.19;
                 const indemniteRuptureConventionnelle = equivalentUniteOeuvre * 0.25;
                 // For Salaire Net calculation, all components are positive (absolute values)
@@ -2208,10 +2232,12 @@
                 
                 console.log('=== CALCUL FINAL ===');
                 console.log('CA Net HT:', caNetHT);
+                console.log('Frais INCOM:', fraisIncom);
+                console.log('CA NET Driver:', caNetDriver);
                 console.log('Indemnité kilométrique (déduction):', indemniteKm);
                 console.log('TVA déductible (ajout):', tvaDeductible);
                 console.log('Indemnité repas (déduction):', indemniteRepas);
-                console.log('SALAIRE BRUT AVANT IMPÔTS:', salaireBrutAvantImpots);
+                console.log('SALAIRE BRUT AVANT IMPÔTS (CA NET Driver + composants):', salaireBrutAvantImpots);
                 console.log('Equivalent Unité d\'Œuvre au SMIC (÷ 13.84):', equivalentUniteOeuvre);
                 console.log('SALAIRE NET AVANT IMPÔTS (Unité d\'Œuvre × 9.40):', salaireNetAvantImpots);
                 console.log('Indemnités Congés Payés (Unité d\'Œuvre × 1.19):', indemniteCongesPayes);
@@ -2261,21 +2287,23 @@
                 // INCOM salary (with benefits)
                 const incomSalary = results.salaireNet;
                 const incomPercentage = results.pourcentageRestitution;
+                const grossSalaryEquivalent = results.salaireBrutAvantImpots;
 
-                // Update comparison cards
-                document.getElementById('result-incom-amount').textContent = formatEuro(incomSalary);
-                document.getElementById('result-incom-percentage').textContent = `${incomPercentage} % de restitution`;
+                // Update new header section
+                document.getElementById('result-restitution-pill').textContent = `${incomPercentage} % de restitution`;
+                document.getElementById('result-gross-salary-line').textContent = `Salaire brut : ${formatEuroNoDecimals(grossSalaryEquivalent)} / mois`;
+                document.getElementById('result-total-amount').textContent = formatEuroNoDecimals(incomSalary);
 
-                // Update salary components
-                document.getElementById('component-salaire-net').textContent = formatEuro(results.salaireNetAvantImpots);
+                // Update salary components with new format
+                document.getElementById('component-salaire-net').textContent = formatEuroWithDecimals(results.salaireNetAvantImpots);
 
-                document.getElementById('component-indemnites-km').textContent = formatEuro(Math.abs(results.indemniteKm));
+                document.getElementById('component-indemnites-km').textContent = formatEuroWithDecimals(Math.abs(results.indemniteKm));
 
-                document.getElementById('component-indemnites-repas').textContent = formatEuro(Math.abs(results.indemniteRepas));
+                document.getElementById('component-indemnites-repas').textContent = formatEuroWithDecimals(Math.abs(results.indemniteRepas));
 
-                document.getElementById('component-conges-payes').textContent = formatEuro(results.indemniteCongesPayes);
+                document.getElementById('component-conges-payes').textContent = formatEuroWithDecimals(results.indemniteCongesPayes);
 
-                document.getElementById('component-rupture-conventionnelle').textContent = formatEuro(results.indemniteRuptureConventionnelle);
+                document.getElementById('component-rupture-conventionnelle').textContent = formatEuroWithDecimals(results.indemniteRuptureConventionnelle);
 
                 // Hide form and show results
                 document.getElementById('formSection').style.display = 'none';
@@ -2283,6 +2311,24 @@
             }
 
             function formatEuro(value) {
+                return new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).format(value);
+            }
+
+            function formatEuroNoDecimals(value) {
+                return new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(value);
+            }
+
+            function formatEuroWithDecimals(value) {
                 return new Intl.NumberFormat('fr-FR', {
                     style: 'currency',
                     currency: 'EUR',
