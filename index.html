@@ -2,13 +2,68 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Financial Simulation Tool</title>
     <style>
-        /* Smooth scroll fix */
-        html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        body { -webkit-overflow-scrolling: touch; overscroll-behavior: none; }
-        * { -webkit-transform: translateZ(0); transform: translateZ(0); }
+        /* IFRAME MOBILE SCROLL FIXES */
+        html {
+            height: 100%;
+            overflow: visible;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            height: auto;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: none;
+            position: relative;
+        }
+        
+        /* Force scrollable container */
+        .financial-tool-container {
+            height: auto !important;
+            min-height: 100vh;
+            overflow: visible;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Mobile specific iframe fixes */
+        @media (max-width: 768px) {
+            html, body {
+                height: auto !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior: auto !important;
+            }
+            
+            /* Ensure all content is scrollable */
+            .financial-tool-wrapper,
+            .financial-tool-container,
+            .ft-results-container {
+                height: auto !important;
+                overflow: visible !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Input fixes to prevent zoom blocking scroll */
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+        
+        /* iOS Safari iframe specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                -webkit-overflow-scrolling: touch;
+                overflow-y: auto;
+            }
+        }
         
         /* Hide text content when showing results */
         #resultsSection:not([style*="display: none"]) ~ * #formTextContent,
@@ -2253,6 +2308,52 @@
                 initFinancialTool();
             }
         })();
+
+        // IFRAME MOBILE SCROLL FIXES - JavaScript
+        function fixMobileScroll() {
+            // Force scroll container properties
+            document.documentElement.style.height = 'auto';
+            document.documentElement.style.overflow = 'visible';
+            document.body.style.height = 'auto';
+            document.body.style.minHeight = '100vh';
+            document.body.style.overflow = 'visible';
+            
+            // Ensure containers are scrollable
+            const containers = document.querySelectorAll('.financial-tool-container, .financial-tool-wrapper, .ft-results-container');
+            containers.forEach(container => {
+                container.style.height = 'auto';
+                container.style.overflow = 'visible';
+                container.style.webkitOverflowScrolling = 'touch';
+            });
+            
+            // Fix for iOS Safari iframe
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                document.body.style.webkitOverflowScrolling = 'touch';
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Fix for Android Chrome iframe
+            if (/Android/.test(navigator.userAgent)) {
+                document.documentElement.style.overflow = 'auto';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Apply fixes when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fixMobileScroll);
+        } else {
+            fixMobileScroll();
+        }
+        
+        // Re-apply fixes when window resizes
+        window.addEventListener('resize', fixMobileScroll);
+        
+        // Fix scroll on orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(fixMobileScroll, 100);
+        });
+        
     </script>
 </body>
 </html>
