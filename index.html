@@ -1801,12 +1801,40 @@
 
                 // Button handlers
                 document.getElementById('ft-resultBtn').addEventListener('click', function() {
-                    // Auto-scroll to top on mobile when button is clicked
+                    // Multiple scroll methods to ensure it works in iframe on mobile
                     if (window.innerWidth <= 768) {
+                        // Method 1: Standard window scroll
                         window.scrollTo({
                             top: 0,
                             behavior: 'smooth'
                         });
+                        
+                        // Method 2: Document element scroll
+                        document.documentElement.scrollTop = 0;
+                        
+                        // Method 3: Body scroll
+                        document.body.scrollTop = 0;
+                        
+                        // Method 4: Parent iframe scroll (if exists)
+                        try {
+                            if (window.parent && window.parent !== window) {
+                                window.parent.scrollTo({
+                                    top: 0,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        } catch (e) {
+                            // Ignore cross-origin errors
+                        }
+                        
+                        // Method 5: Scroll to top element
+                        const topElement = document.body.firstElementChild;
+                        if (topElement) {
+                            topElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
                     }
                     
                     validateAndSubmit();
