@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Simulation Tool</title>
     <style>
+        /* Smooth scroll fix */
+        html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        body { -webkit-overflow-scrolling: touch; overscroll-behavior: none; }
+        * { -webkit-transform: translateZ(0); transform: translateZ(0); }
+        
         /* Hide text content when showing results */
         #resultsSection:not([style*="display: none"]) ~ * #formTextContent,
         body:has(#resultsSection:not([style*="display: none"])) #formTextContent {
@@ -929,101 +934,7 @@
             opacity: 1;
         }
 
-        /* Custom Dropdown Styling */
-        .ft-custom-dropdown {
-            position: relative;
-            width: 100%;
-            cursor: pointer;
-        }
 
-        .ft-dropdown-selected {
-            width: 100%;
-            padding: 12px 18px;
-            border: 2px solid #e0e4e7;
-            border-radius: 8px;
-            font-size: 16px;
-            background: #ffffff;
-            box-sizing: border-box;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: border-color 0.3s;
-            cursor: pointer;
-        }
-
-        .ft-dropdown-selected:focus,
-        .ft-dropdown-selected:focus-within,
-        .ft-custom-dropdown.ft-open .ft-dropdown-selected {
-            outline: none;
-            border-color: #cef355;
-        }
-
-        .ft-dropdown-selected.ft-error {
-            border-color: #dc3545;
-        }
-
-        .ft-dropdown-placeholder {
-            color: #9ca3af;
-            font-size: 16px;
-            font-style: normal;
-            opacity: 1;
-            flex: 1;
-            user-select: none;
-            text-align: left;
-        }
-
-        .ft-dropdown-selected.ft-has-value .ft-dropdown-placeholder {
-            color: #1a1a1a;
-        }
-
-        .ft-dropdown-arrow {
-            color: #6c757d;
-            font-size: 12px;
-            transition: transform 0.3s;
-            user-select: none;
-        }
-
-        .ft-custom-dropdown.ft-open .ft-dropdown-arrow {
-            transform: rotate(180deg);
-        }
-
-        .ft-dropdown-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: #ffffff;
-            border: 2px solid #cef355;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .ft-custom-dropdown.ft-open .ft-dropdown-options {
-            display: block;
-        }
-
-        .ft-dropdown-option {
-            padding: 12px 18px;
-            font-size: 16px;
-            color: #1a1a1a;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            user-select: none;
-        }
-
-        .ft-dropdown-option:hover {
-            background-color: #f8fff0;
-        }
-
-        .ft-dropdown-option:last-child {
-            border-radius: 0 0 6px 6px;
-        }
 
         /* Vehicle options styling */
         .ft-vehicle-group .ft-form-input {
@@ -1267,7 +1178,6 @@
 
             /* Ensure all input containers have equal left/right spacing */
             .ft-currency-input-wrapper,
-            .ft-custom-dropdown,
             .ft-vehicle-options {
                 width: 100%;
                 box-sizing: border-box;
@@ -1300,28 +1210,8 @@
                 font-size: 16px;
             }
 
-            /* Dropdown improvements for mobile */
-            .ft-dropdown-selected {
-                padding: 14px 18px;
-                height: 52px;
-                font-size: 16px;
-                border-radius: 10px;
-                width: 100%;
-                box-sizing: border-box;
-                margin: 0;
-            }
 
-            .ft-dropdown-options {
-                border-radius: 0 0 10px 10px;
-                max-height: 180px;
-                width: 100%;
-                box-sizing: border-box;
-            }
 
-            .ft-dropdown-option {
-                padding: 14px 18px;
-                font-size: 16px;
-            }
             
             .ft-vehicle-options {
                 gap: 10px;
@@ -1459,13 +1349,6 @@
                 font-size: 15px;
             }
 
-            .ft-dropdown-selected {
-                padding: 12px 16px;
-                height: 48px;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
             .ft-vehicle-options {
                 height: 70px;
                 gap: 8px;
@@ -1569,18 +1452,12 @@
                             <!-- Titularité du véhicule -->
                             <div class="ft-form-group">
                                 <label for="ft-ownership" class="ft-form-label">Titularité du véhicule</label>
-                                <div class="ft-custom-dropdown" id="ft-ownership-dropdown">
-                                    <div class="ft-dropdown-selected" id="ft-ownership-selected">
-                                        <span class="ft-dropdown-placeholder">Sélectionnez une option</span>
-                                        <span class="ft-dropdown-arrow">▼</span>
-                                    </div>
-                                    <div class="ft-dropdown-options" id="ft-ownership-options">
-                                        <div class="ft-dropdown-option" data-value="owner">Propriétaire</div>
-                                        <div class="ft-dropdown-option" data-value="credit">Crédit véhicule (financement)</div>
-                                        <div class="ft-dropdown-option" data-value="leasing">Leasing / Location longue durée</div>
-                                    </div>
-                                    <input type="hidden" id="ft-ownership" name="ownership" value="">
-                                </div>
+                                <select class="ft-form-input" id="ft-ownership" name="ownership">
+                                    <option value="">Sélectionnez une option</option>
+                                    <option value="owner">Propriétaire</option>
+                                    <option value="credit">Crédit véhicule (financement)</option>
+                                    <option value="leasing">Leasing / Location longue durée</option>
+                                </select>
                                 <div class="ft-error-message" id="ft-ownership-error"></div>
                             </div>
 
@@ -1796,15 +1673,9 @@
                     }
                 });
                 
-                // Set custom dropdown and handle conditional field
+                // Set ownership select value
                 if (financialToolData.ownership) {
-                    const dropdownSelected = document.getElementById('ft-ownership-selected');
-                    const placeholder = dropdownSelected.querySelector('.ft-dropdown-placeholder');
-                    const ownershipInput = document.getElementById('ft-ownership');
-                    
-                    ownershipInput.value = financialToolData.ownership;
-                    placeholder.textContent = getOwnershipLabel(financialToolData.ownership);
-                    dropdownSelected.classList.add('ft-has-value');
+                    document.getElementById('ft-ownership').value = financialToolData.ownership;
                     handleOwnershipChange(financialToolData.ownership);
                 }
             }
@@ -1859,71 +1730,20 @@
                     });
                 });
 
-                // Custom dropdown handling
-                const customDropdown = document.getElementById('ft-ownership-dropdown');
-                const dropdownSelected = document.getElementById('ft-ownership-selected');
-                const dropdownOptions = document.getElementById('ft-ownership-options');
-                const ownershipInput = document.getElementById('ft-ownership');
-
-                // Toggle dropdown
-                dropdownSelected.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const isOpen = customDropdown.classList.contains('ft-open');
+                // Simple select handling
+                const ownershipSelect = document.getElementById('ft-ownership');
+                
+                ownershipSelect.addEventListener('change', function() {
+                    const value = this.value;
+                    financialToolData.ownership = value;
                     
-                    // Close all other dropdowns (if any)
-                    document.querySelectorAll('.ft-custom-dropdown.ft-open').forEach(dropdown => {
-                        dropdown.classList.remove('ft-open');
-                    });
+                    // Handle conditional field
+                    handleOwnershipChange(value);
                     
-                    if (!isOpen) {
-                        customDropdown.classList.add('ft-open');
-                    }
+                    // Clear any error
+                    this.classList.remove('ft-error');
+                    document.getElementById('ft-ownership-error').textContent = '';
                 });
-
-                // Handle option selection
-                dropdownOptions.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('ft-dropdown-option')) {
-                        const value = e.target.dataset.value;
-                        const text = e.target.textContent;
-                        
-                        // Update the display
-                        const placeholder = dropdownSelected.querySelector('.ft-dropdown-placeholder');
-                        placeholder.textContent = text;
-                        dropdownSelected.classList.add('ft-has-value');
-                        
-                        // Update the hidden input
-                        ownershipInput.value = value;
-                        financialToolData.ownership = value;
-                        
-                        // Handle conditional field
-                        handleOwnershipChange(value);
-                        
-                        // Close dropdown
-                        customDropdown.classList.remove('ft-open');
-                        
-                        // Clear any error
-                        dropdownSelected.classList.remove('ft-error');
-                        document.getElementById('ft-ownership-error').textContent = '';
-                    }
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function() {
-                    customDropdown.classList.remove('ft-open');
-                });
-
-                // Keyboard support for dropdown
-                dropdownSelected.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        dropdownSelected.click();
-                    } else if (e.key === 'Escape') {
-                        customDropdown.classList.remove('ft-open');
-                    }
-                });
-
-                // Add tabindex for keyboard navigation
-                dropdownSelected.setAttribute('tabindex', '0');
 
                 // Email input
                 const emailInput = document.getElementById('ft-email');
@@ -2361,12 +2181,6 @@
                 document.getElementById('ft-email').value = '';
                 document.getElementById('ft-ownership').value = '';
 
-                // Reset dropdown
-                const dropdownSelected = document.getElementById('ft-ownership-selected');
-                const placeholder = dropdownSelected.querySelector('.ft-dropdown-placeholder');
-                placeholder.textContent = 'Sélectionnez une option';
-                dropdownSelected.classList.remove('ft-has-value');
-
                 // Reset vehicle selection
                 document.querySelectorAll('.ft-vehicle-option').forEach(option => {
                     option.classList.remove('ft-selected');
@@ -2406,13 +2220,7 @@
                 const field = document.getElementById(fieldId);
                 const errorElement = document.getElementById(fieldId + '-error');
                 
-                if (fieldId === 'ft-ownership') {
-                    // Handle custom dropdown error styling
-                    const dropdownSelected = document.getElementById('ft-ownership-selected');
-                    if (dropdownSelected) {
-                        dropdownSelected.classList.add('ft-error');
-                    }
-                } else if (field) {
+                if (field) {
                     field.classList.add('ft-error');
                 }
                 
@@ -2424,14 +2232,9 @@
             function clearErrors() {
                 const errorElements = document.querySelectorAll('.ft-error-message');
                 const inputElements = document.querySelectorAll('.ft-form-input');
-                const dropdownSelected = document.getElementById('ft-ownership-selected');
                 
                 errorElements.forEach(el => el.textContent = '');
                 inputElements.forEach(el => el.classList.remove('ft-error'));
-                
-                if (dropdownSelected) {
-                    dropdownSelected.classList.remove('ft-error');
-                }
             }
 
             function getOwnershipLabel(value) {
